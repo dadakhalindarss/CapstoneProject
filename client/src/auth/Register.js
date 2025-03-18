@@ -29,7 +29,7 @@ const Register = () => {
             });
 
             if (response.status === 201) {
-                setSuccessMessage("✅ Registration successful! You can now log in.");
+                setSuccessMessage("Registration successful! You can now log in.");
                 setFormData({ fullName: "", email: "", password: "", role: "" }); 
             } else {
                 setError("Unexpected response from server. Please try again.");
