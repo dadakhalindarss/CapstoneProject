@@ -21,7 +21,7 @@ namespace TaskManagementAPI.Controllers
             _context = context;
         }
 
-        // 🔹 Get all tasks (Users can view)
+        //  Get all tasks (Users can view)
         [HttpGet]
         [Authorize] // Requires authentication
         public async Task<IActionResult> GetTasks()
@@ -30,7 +30,7 @@ namespace TaskManagementAPI.Controllers
             return Ok(tasks);
         }
 
-        // 🔹 Create a new task (Only Admin & Manager can create)
+        //  Create a new task (Only Admin & Manager can create)
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")] // Restrict access
         public async Task<IActionResult> CreateTask([FromBody] TaskItem task)
@@ -43,7 +43,7 @@ namespace TaskManagementAPI.Controllers
             return CreatedAtAction(nameof(GetTasks), new { id = task.Id }, task);
         }
 
-        // 🔹 Update task details (Only Admin & Manager can update)
+        //  Update task details (Only Admin & Manager can update)
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,Manager")] // Restrict access
         public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskItem updatedTask)
@@ -59,7 +59,7 @@ namespace TaskManagementAPI.Controllers
             return Ok(task);
         }
 
-        // 🔹 Assign task to a user (Only Admin & Manager)
+        //  Assign task to a user (Only Admin & Manager)
         [HttpPut("{taskId}/assign/{userId}")]
         [Authorize(Roles = "Admin,Manager")] // Restrict access
         public async Task<IActionResult> AssignTask(int taskId, int userId)
@@ -75,7 +75,7 @@ namespace TaskManagementAPI.Controllers
             return Ok(new { message = "Task assigned successfully", task });
         }
 
-        // 🔹 Get User Role from JWT Token
+        //  Get User Role from JWT Token
         private string GetUserRole()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
