@@ -14,19 +14,19 @@ namespace TaskManagementAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // 🔹 Define Unique Constraint for User Email
+            //  Define Unique Constraint for User Email
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            // 🔹 Define Relationship between TaskItem and User
+            //  Define Relationship between TaskItem and User
             modelBuilder.Entity<TaskItem>()
                 .HasOne(t => t.Assignee)
                 .WithMany()
                 .HasForeignKey(t => t.AssigneeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ✅ Seed Users with Plain Text Passwords (⚠️ NOT SECURE FOR PRODUCTION)
+            //  Seed Users with Plain Text Passwords ( NOT SECURE FOR PRODUCTION)
             modelBuilder.Entity<User>().HasData(
                 new User { Id = 1, FullName = "Admin", Email = "admin@gmail.com", Password = "admin123", Role = "Admin" },
                 new User { Id = 2, FullName = "Manager", Email = "manager@gmail.com", Password = "manager123", Role = "Manager" },
