@@ -19,12 +19,12 @@ const Login = () => {
             const success = await login(email.trim(), password.trim());
 
             if (success) {
-                navigate("/dashboard"); // ✅ Redirect on successful login
+                navigate("/dashboard"); // Redirect on successful login
             } else {
                 setError("Invalid email or password.");
             }
         } catch (err) {
-            console.error("Login Error:", err.response?.data); // 🔹 Debugging error log
+            console.error("Login Error:", err.response?.data); //  Debugging error log
 
             let errorMessage = "Login failed. Please try again.";
 
