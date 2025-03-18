@@ -14,7 +14,7 @@ namespace TaskManagementAPI.Models
         public required string Email { get; set; }
 
         [Required]
-        public string Password { get; set; } = string.Empty; // ✅ Using plain text password
+        public string Password { get; set; } = string.Empty; // Using plain text password
 
         [Required]
         public string Role { get; set; } = "User"; // Default role
@@ -23,7 +23,7 @@ namespace TaskManagementAPI.Models
         {
             FullName = string.Empty;
             Email = string.Empty;
-            Password = string.Empty; // ✅ Ensure it initializes correctly
+            Password = string.Empty; //  Ensure it initializes correctly
         }
     }
 }
