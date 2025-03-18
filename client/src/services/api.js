@@ -2,18 +2,18 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/api";
 
-// ✅ Axios instance with base API URL
+// Axios instance with base API URL
 const api = axios.create({
     baseURL: API_URL,
     headers: { "Content-Type": "application/json" },
 });
 
-// ✅ Helper function to attach Authorization header
+//  Helper function to attach Authorization header
 const authHeaders = (token) => ({
     headers: { Authorization: `Bearer ${token}` },
 });
 
-// ✅ Store token in local storage
+//  Store token in local storage
 export const setAuthToken = (token) => {
     if (token) {
         localStorage.setItem("authToken", token);
@@ -24,7 +24,7 @@ export const setAuthToken = (token) => {
     }
 };
 
-// ✅ Login User (Stores token & role)
+//  Login User (Stores token & role)
 export const loginUser = async (email, password) => {
     try {
         const response = await api.post("/auth/login", { email, password });
@@ -37,12 +37,12 @@ export const loginUser = async (email, password) => {
     }
 };
 
-// ✅ Logout User (Clears token)
+//  Logout User (Clears token)
 export const logoutUser = () => {
     setAuthToken(null);
 };
 
-// ✅ Get all tasks
+//  Get all tasks
 export const getTasks = async (token) => {
     try {
         const response = await api.get("/tasks", authHeaders(token));
@@ -53,7 +53,7 @@ export const getTasks = async (token) => {
     }
 };
 
-// ✅ Create a new task (Only Admins & Managers)
+//  Create a new task (Only Admins & Managers)
 export const createTask = async (task, token) => {
     try {
         await api.post("/tasks", task, authHeaders(token));
@@ -63,7 +63,7 @@ export const createTask = async (task, token) => {
     }
 };
 
-// ✅ Update task status
+//  Update task status
 export const updateTaskStatus = async (id, status, token) => {
     try {
         await api.put(`/tasks/${id}`, { status }, authHeaders(token));
@@ -73,7 +73,7 @@ export const updateTaskStatus = async (id, status, token) => {
     }
 };
 
-// ✅ Get all users
+//  Get all users
 export const getUsers = async (token) => {
     try {
         const response = await api.get("/users", authHeaders(token));
@@ -84,7 +84,7 @@ export const getUsers = async (token) => {
     }
 };
 
-// ✅ Assign a task to a user
+//  Assign a task to a user
 export const assignTask = async (taskId, userId, token) => {
     try {
         await api.put(`/tasks/${taskId}/assign/${userId}`, {}, authHeaders(token));
@@ -94,7 +94,7 @@ export const assignTask = async (taskId, userId, token) => {
     }
 };
 
-// ✅ Get logged-in user's role
+//  Get logged-in user's role
 export const getUserRole = async (token) => {
     try {
         const response = await api.get("/auth/me", authHeaders(token));
