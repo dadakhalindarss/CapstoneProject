@@ -19,7 +19,7 @@ namespace TaskManagementAPI.Services
             _config = config;
         }
 
-        // ✅ Register User
+        //  Register User
         public async Task<User?> Register(string fullName, string email, string password, string role = "User")
         {
             if (await _context.Users.AnyAsync(u => u.Email == email))
@@ -29,7 +29,7 @@ namespace TaskManagementAPI.Services
             {
                 FullName = fullName,
                 Email = email,
-                Password = password,  // ⚠️ Plain text password (not secure)
+                Password = password,  //  Plain text password (not secure)
                 Role = role  
             };
 
@@ -38,7 +38,7 @@ namespace TaskManagementAPI.Services
             return user;
         }
 
-        // ✅ Login User
+        //  Login User
         public async Task<object?> Login(string email, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -58,7 +58,7 @@ namespace TaskManagementAPI.Services
             return new { token, role = user.Role };
         }
 
-        // ✅ Generate JWT Token
+        //  Generate JWT Token
         private string GenerateJwtToken(User user)
         {
             string? jwtKey = _config["Jwt:Key"];
@@ -94,7 +94,7 @@ namespace TaskManagementAPI.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        // ✅ Validate JWT Token
+        //  Validate JWT Token
         public ClaimsPrincipal? ValidateToken(string token)
         {
             string? jwtKey = _config["Jwt:Key"];
@@ -133,7 +133,7 @@ namespace TaskManagementAPI.Services
             }
         }
 
-        // ✅ Fetch Authenticated User Info
+        //  Fetch Authenticated User Info
         public async Task<User?> GetUserInfo(string userId)
         {
             if (!int.TryParse(userId, out int id))
