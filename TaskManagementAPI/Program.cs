@@ -8,24 +8,24 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Load configuration
+//  Load configuration
 var config = builder.Configuration;
 
-// ✅ Add services to the container
+//  Add services to the container
 builder.Services.AddControllers(); // API Controllers
 builder.Services.AddEndpointsApiExplorer();
 
-// ✅ Configure Swagger with JWT authentication support
+//  Configure Swagger with JWT authentication support
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Task Management API",
+        Title = "Project Collaboration Tool API",
         Version = "v1",
         Description = "API for managing tasks and authentication."
     });
 
-    // 🔹 Enable JWT authentication in Swagger
+    //  Enable JWT authentication in Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -52,14 +52,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// ✅ Database Context (Entity Framework Core)
+// Database Context (Entity Framework Core)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-// ✅ Authentication Service
+//  Authentication Service
 builder.Services.AddScoped<AuthService>();
 
-// ✅ CORS Policy (Allows frontend to connect)
+// CORS Policy (Allows frontend to connect)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -68,7 +68,7 @@ builder.Services.AddCors(options =>
                         .AllowAnyHeader());
 });
 
-// ✅ JWT Authentication
+// JWT Authentication
 var jwtKey = config["Jwt:Key"];
 if (string.IsNullOrEmpty(jwtKey))
 {
@@ -92,14 +92,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// ✅ Apply pending migrations automatically
+//  Apply pending migrations automatically
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.Migrate();
 }
 
-// ✅ Configure the HTTP request pipeline
+//  Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage(); // 🔹 Improved error handling for development
@@ -114,15 +114,15 @@ else
 
 app.UseHttpsRedirection();
 
-// ✅ Enable CORS
+// Enable CORS
 app.UseCors("AllowFrontend");
 
-// ✅ Enable Authentication & Authorization
+//  Enable Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Map Controllers for API routes
+//  Map Controllers for API routes
 app.MapControllers();
 
-// ✅ Run the application
+//  Run the application
 app.Run();
